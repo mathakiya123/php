@@ -1,0 +1,583 @@
+(1.1)     
+ 1) What is HTML?   Explain its structure.
+
+			i)What is HTML?
+--> HTML (HyperText Markup Language) is the standard language used to create and structure content on the web. It is not a programming language but a markup language, which means it is used to "mark up" text with tags that define how the content should be displayed in a browser.
+
+			ii) Structure of HTML
+An HTML document has a hierarchical structure made up of elements enclosed in tags. These tags tell the browser how to display the content.
+
+Basic Structure of an HTML Document
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Web Page</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <p>This is a paragraph.</p>
+  </body>
+</html>
+Breakdown of the Structure:
+Part	Description
+<!DOCTYPE html>	Declares the document type and version of HTML. It tells the browser this is an HTML5 document.
+<html>	The root element that wraps all content on the page.
+<head>	Contains meta-information about the document (title, charset, styles, etc.) that is not displayed directly.
+<title>	Sets the title of the web page (seen in browser tabs).
+<body>	Contains the actual content of the web page, such as headings, paragraphs, images, links, etc.
+<h1> to <h6>	Header tags used for headings, <h1> being the largest and most important.
+<p>	Paragraph tag, used for blocks of text.
+
+
+<div>
+  <p>Nested paragraph</p>
+</div>
+Summary
+HTML structures web pages using elements defined by tags. Its structure typically includes a doctype, a head section for metadata, and a body section for visible content. It forms the foundation for all web development.
+
+
+2)Describe the purpose of HTML tags and provide examples of commonly used tags
+--> purpose of HTML
+HTML (HyperText Markup Language) tags are used to structure content on the web. They define elements such as headings, paragraphs, links, images, tables, and more. Tags tell the browser how to display the content.
+
+Each HTML tag consists of:
+
+An opening tag: <tagname>
+
+The content
+
+A closing tag: </tagname>
+
+example:-
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Webpage</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>This is my first paragraph.</p>
+    <a href="https://example.com">Visit Example</a>
+    <img src="image.jpg" alt="Sample Image" />
+  </body>
+</html>
+
+
+3) What are the differences between block-level and inline elements? Give examples of each ?
+--> Block-Level Elements
+Definition:
+Block-level elements start on a new line and take up the full width of their container. They are used to structure the layout of the page.
+
+Characteristics:
+
+Always start on a new line.
+
+Occupy full width by default.
+
+Can contain other block or inline elements.
+
+Can have width, height, margin, and padding.
+
+Examples:
+<div>This is a div (block-level).</div>
+<p>This is a paragraph.</p>
+<h1>This is a heading.</h1>
+<ul>
+  <li>List Item</li>
+</ul>
+<section>This is a section.</section>
+=> Inline Elements
+Definition:
+Inline elements do not start on a new line. They only take up as much width as necessary and flow within the line of text.
+
+Characteristics:
+
+Do not break to a new line.
+
+Take only the width they need.
+
+Cannot contain block-level elements.
+
+Commonly used for formatting text.
+
+Examples:
+
+<span>This is a span (inline).</span>
+<a href="#">This is a link</a>
+<strong>Bold Text</strong>
+<em>Italic Text</em>
+<img src="image.jpg" alt="Image" />
+Examples	<div>, <p>, <h1>	<span>, <a>, <img>
+
+
+4) Explain the concept of semantic HTML and why it is important.
+--> What is Semantic HTML?
+Semantic HTML refers to the use of HTML tags that convey the meaning (semantics) of the content they enclose.
+These tags clearly describe their purpose and role in the document, both for humans and machines (like search engines or screen readers).
+
+-->purpose of Semantic HTML
+Semantic HTML helps in:
+
+Making code more readable and understandable
+
+Improving accessibility for assistive technologies
+
+Enhancing SEO (Search Engine Optimization)
+
+Providing structure to web pages
+
+-->Why Semantic HTML is Important
+Accessibility:
+Helps screen readers and assistive technologies interpret page content for visually impaired users.
+
+SEO (Search Engine Optimization):
+Search engines better understand your content, improving visibility in search results.
+
+Maintainability:
+Easier for developers to read, understand, and maintain code.
+
+Standardization:
+Follows best practices for clean and structured code.
+
+(2.1) CSS FUNDAMENTALS
+1) What is CSS? How does it differ from HTML?
+--> What is CSS?
+CSS stands for Cascading Style Sheets.
+It is a stylesheet language used to describe the presentation (look and formatting) of a web page written in HTML.
+
+=> Purpose of CSS
+CSS is used to:
+
+Control the layout, colors, fonts, and spacing
+
+Make web pages look attractive and responsive
+
+Apply styles to multiple HTML elements at once
+
+Key Features of CSS
+Separates content (HTML) from design (CSS)
+
+Allows for consistent styling across a website
+
+Supports responsive design (for different screen sizes)
+
+=> Difference Between HTML and CSS
+HTML (HyperText Markup Language) is used to structure the content of a webpage. It defines elements like headings, paragraphs, images, links, lists, etc.
+
+CSS (Cascading Style Sheets) is used to style that content. It controls how the elements look—like their color, size, position, and layout.
+
+In simple words:
+
+HTML is what is on the page.
+
+CSS is how it looks.
+
+2)Explain the three way apply CSS to a webpage ?
+
+-->There are **three main ways to apply CSS to a webpage**:
+
+---
+
+=> **1. Inline CSS**
+
+**Definition:** CSS is applied directly inside an HTML element using the `style` attribute.
+
+**Use Case:** Used for applying unique style rules to a single element.
+
+**Example:**
+
+```html
+<p style="color: red; font-size: 16px;">This is a red paragraph.</p>
+```
+
+---
+
+=> **2. Internal CSS**
+
+**Definition:** CSS is written inside a `<style>` tag within the `<head>` section of the HTML document.
+
+**Use Case:** Useful when styling a single HTML document.
+
+**Example:**
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    h1 {
+      color: blue;
+      text-align: center;
+    }
+    p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Internal CSS Example</h1>
+  <p>This paragraph uses internal CSS.</p>
+</body>
+</html>
+```
+
+---
+
+=> **3. External CSS**
+
+**Definition:** CSS is placed in a separate `.css` file and linked to the HTML using the `<link>` tag.
+
+**Use Case:** Best for styling multiple web pages consistently.
+
+**HTML File (`index.html`):**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>External CSS Example</h1>
+  <p>This paragraph is styled with external CSS.</p>
+</body>
+</html>
+```
+
+=>**CSS File (`style.css`):**
+
+```css
+h1 {
+  color: green;
+}
+p {
+  font-size: 16px;
+}
+
+3)  What are CSS selectors ? List and describe the different types of selectors.
+--> What are CSS Selectors?
+
+**CSS selectors** are patterns used to select and style specific HTML elements.
+They tell the browser **which elements to apply the CSS rules to**.
+
+---
+
+ 
+=> Types of CSS Selectors:
+
+Here’s a list and explanation of the most commonly used selectors:
+
+---
+
+=> **1. Universal Selector (`*`)**
+
+* **Selects all elements** on the page.
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+}
+```
+
+---
+=> **2. Type Selector (Element Selector)**
+
+* **Selects elements by their HTML tag name.**
+
+```css
+p {
+  color: blue;
+}
+```
+
+---
+
+### **3. Class Selector (`.classname`)**
+
+* **Selects elements with a specific class attribute.**
+
+```html
+<p class="intro">Welcome</p>
+```
+
+```css
+.intro {
+  font-size: 20px;
+}
+```
+
+---
+
+### **4. ID Selector (`#idname`)**
+
+* **Selects an element with a specific `id` attribute.**
+
+```html
+<p id="header">Hello</p>
+```
+
+```css
+#header {
+  color: red;
+}
+```
+
+---
+
+### **5. Group Selector**
+
+* **Applies the same styles to multiple elements.**
+
+```css
+h1, h2, p {
+  font-family: Arial;
+}
+
+4) What is the Box Model in CSS?
+
+-->The CSS Box Model is a fundamental concept that describes how HTML elements are structured and displayed on a webpage.Every HTML element is considered a box, consisting of four main areas (from innermost to outermost):
+
+=> Components of the Box Model:
+--> 1. Content
+
+The actual content of the box (text, images, etc.).
+
+This is where your data or information appears.
+
+You can control size with width and height.
+
+width: 200px;
+height: 100px;
+
+ 2. Padding
+
+The space between the content and the border.
+
+It creates space inside the element, around the content.
+
+Transparent in color.
+
+padding: 10px;
+
+ 3. Border
+
+A line that wraps the padding and content.
+
+You can style it (color, size, type).
+
+border: 2px solid black;
+
+ 4. Margin
+
+The space outside the border, between the element and other elements.
+
+Used to create space around elements.
+
+3.0)Responsive Web Design ?
+3.1)  What is responsive web design ? Why is it important ?
+--> What is Responsive Web Design?
+Responsive Web Design (RWD) is a design approach where web pages automatically adjust and look good on all devices, including desktops, tablets, and smartphones.
+
+It ensures that the layout, content, and images resize or rearrange based on the screen size and orientation.
+=> why importance responsive ?
+-->Mobile Usage:- 
+		Most users access websites on mobile devices. RWD ensures a good user experience.
+-->Cross-Device Compatibility:-
+			Your site works well on all devices – desktops, laptops, tablets, and phones
+
+3.2)  Explain the use of media queries in CSS.Provide an example?.
+-->What are Media Queries in CSS?
+Media Queries are a feature in CSS that allow you to apply different styles to a webpage based on the device’s characteristics, such as:
+
+Screen width
+
+Screen height
+
+Device type (mobile, tablet, desktop)
+
+Orientation (portrait or landscape)
+
+Resolution
+
+=> Purpose:
+Media queries make your website responsive — meaning it can look and work well on all screen sizes and devices.
+
+ Syntax:
+
+@media (condition) {
+  /* CSS rules here */
+}
+=> Example: Change background color on small screens
+css
+
+/* Base style (for desktops/larger screens) */
+body {
+  background-color: white;
+  font-size: 18px;
+}
+
+/* For screens 600px wide or smaller */
+@media (max-width: 600px) {
+  body {
+    background-color: lightblue;
+    font-size: 14px;
+  }
+}
+=> Real-World Example:
+
+/* Show 3-column layout for desktops */
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Change to single column on phones */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+
+
+
+3.3)  What are the benefits of using a mobile-first approach in web design?
+-->What are the Benefits of Using a Mobile-First Approach in Web Design?
+
+A mobile-first approach means designing the mobile version of your website first, then adding features/styles for larger screens using progressive enhancement.
+
+=> Why Mobile-First?
+
+Because most users today access websites via mobile devices, and mobile-first ensures a better experience for them
+
+=>key benifit of mobile device ?
+-->Better User Experience on Mobile
+
+Starts with a clean, focused design that works well on small screens.
+
+=> Faster Loading Times
+
+Mobile-first designs often load faster due to optimized content and fewer resources.
+
+=> Improved SEO
+
+Google prioritizes mobile-friendly websites in search results.
+
+
+ 6.)Implementing a Responsive Navigation Bar
+6.)  objective: Create a Responsive Navigation Bar using html and css?
+=> index.html
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Navbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">MySite</div>
+    
+    <!-- Hamburger Menu Toggle -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+</body>
+</html>
+=>style.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+/* Hide checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    background-color: #444;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 160px;
+    display: none;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  #menu-toggle:checked + .hamburger + .nav-links {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+
+
+
+	
+
+
+
+
+
+
