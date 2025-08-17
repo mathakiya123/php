@@ -1,0 +1,1072 @@
+ LABEXERCISE:
+ Module-1. CorePHP 
+1.php syntax
+
+ LAB EXERCISE:
+
+1.1)  Write a PHP script to print "Hello,World!" on a webpage ?
+=>
+		<?php
+                                 // Output text to the browser
+                                    echo "Hello, World!";
+                                     ?>
+
+
+
+
+ 3.PHP Variables
+
+ LABEXERCISE:
+
+3.1)Create a PHP script to declare and initialize different types of variables(integer,float,
+ string,boolean).Display them using echo.
+=>
+ 
+    <?php
+  // Integer variable
+    $age = 25;
+
+    // Float variable
+    $price = 199.99;
+
+    // String variable
+   $name = "John Doe";
+
+    // Boolean variable
+   $is_student = true;
+
+    // Display the variables
+   echo "Integer: " . $age . "<br>";
+   echo "Float: " . $price . "<br>";
+  echo "String: " . $name . "<br>";
+  echo "Boolean: " . ($is_student ? "True" : "False") . "<br>";
+ ?>
+
+
+ 4.Super Global Variables
+LAB EXERCISE:
+4.1)Create a form that takes a user's name and email.Use the $_POST super global to
+ display the enterred data.
+=>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Form</title>
+</head>
+<body>
+
+<!-- Form to collect Name and Email -->
+<form method="post" action="">
+    <label for="name">Name:</label>
+    <input type="text" name="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<?php
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];   // Get name from POST
+    $email = $_POST['email']; // Get email from POST
+
+    // Display the entered data
+    echo "<h2>Entered Data:</h2>";
+    echo "Name: " . htmlspecialchars($name) . "<br>";
+    echo "Email: " . htmlspecialchars($email);
+}
+?>
+
+</body>
+</html>
+
+
+ 5.Practical Example :MultipleTables and SQLQueries
+5.1) Create multiple tables and perform queries using:
+ o SELECT,UPDATE,DELETE,INSERT
+ o WHERE,LIKE,GROUPBY,HAVING
+ o LIMIT,OFFSET,Subqueries,AND,OR,NOT,IN
+=>database.php
+
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root"; // Default in XAMPP/WAMP
+$password = "";
+$dbname = "demo_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Create database
+$conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
+$conn->select_db($dbname);
+
+// Create tables
+$conn->query("CREATE TABLE IF NOT EXISTS customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(50)
+)");
+
+$conn->query("CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    product VARCHAR(50),
+    amount DECIMAL(10,2),
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+)");
+
+// Insert sample data
+$conn->query("INSERT INTO customers (name, email) VALUES
+    ('John Doe', 'john@example.com'),
+    ('Jane Smith', 'jane@example.com'),
+    ('Mike Johnson', 'mike@example.com')
+");
+
+$conn->query("INSERT INTO orders (customer_id, product, amount) VALUES
+    (1, 'Laptop', 800.00),
+    (1, 'Mouse', 20.00),
+    (2, 'Keyboard', 50.00),
+    (3, 'Monitor', 200.00)
+");
+
+// SELECT with WHERE, AND, OR
+$result = $conn->query("SELECT * FROM customers WHERE name LIKE 'J%' AND email NOT LIKE '%test%'");
+echo "<h3>Customers starting with 'J'</h3>";
+while($row = $result->fetch_assoc()) {
+    echo $row['name'] . " - " . $row['email'] . "<br>";
+}
+
+// UPDATE
+$conn->query("UPDATE customers SET email='john.doe@example.com' WHERE id=1");
+
+// DELETE
+$conn->query("DELETE FROM customers WHERE name='Mike Johnson'");
+
+// GROUP BY and HAVING
+$result = $conn->query("SELECT customer_id, COUNT(*) AS total_orders, SUM(amount) AS total_spent
+    FROM orders
+    GROUP BY customer_id
+    HAVING total_spent > 100");
+
+echo "<h3>Customers with total spent > 100</h3>";
+while($row = $result->fetch_assoc()) {
+    echo "Customer ID: " . $row['customer_id'] . " | Orders: " . $row['total_orders'] . " | Spent: " . $row['total_spent'] . "<br>";
+}
+
+// LIMIT and OFFSET
+$result = $conn->query("SELECT * FROM orders LIMIT 2 OFFSET 1");
+echo "<h3>Orders (limit 2, skip 1)</h3>";
+while($row = $result->fetch_assoc()) {
+    echo $row['product'] . " - $" . $row['amount'] . "<br>";
+}
+
+// Subquery example: customers with orders over $100
+$result = $conn->query("SELECT name FROM customers WHERE id IN (
+    SELECT customer_id FROM orders GROUP BY customer_id HAVING SUM(amount) > 100
+)");
+echo "<h3>Customers with orders over $100</h3>";
+while($row = $result->fetch_assoc()) {
+    echo $row['name'] . "<br>";
+}
+
+$conn->close();
+?>
+
+
+
+ 7.If Condition and If-ElseIf
+7.1)  Writea PHP program to determine if a number is even or odd using if conditions ?.
+=>
+
+<?php
+// Number to check
+$number = 7;
+
+// Check if the number is even or odd
+if ($number % 2 == 0) {
+    echo $number . " is Even";
+} else {
+    echo $number . " is Odd";
+}
+?>
+
+
+	
+ 8.Practical Example:Calculator and DayFinder
+ 8.1)Simple Calculator:Create a calculator using if-else conditions that takes two inputs
+ and an operator(+,-,*,/).
+=>
+
+<?php
+// Number to check
+$number = 7;
+
+// Check if the number is even or odd
+if ($number % 2 == 0) {
+    echo $number . " is Even";
+} else {
+    echo $number . " is Odd";
+}
+?>
+
+8.2) Day Finder:Write a script that finds the current day.If it is Sunday,print"Happy
+ Sunday."?
+=>
+
+
+<?php
+// Get the current day (Full name like Sunday, Monday, etc.)
+$current_day = date("l");
+
+// Display the current day
+echo "Today is: " . $current_day . "<br>";
+
+// Check if it's Sunday
+if ($current_day == "Sunday") {
+    echo "Happy Sunday.";
+}
+?>
+
+ 9.Switch Case and Ternary Operator
+9.1)1. Restaurant Food Category Program:Use a switch case to display the category
+ (Starter/MainCourse/Dessert)and dish based on user selection
+=>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Food Category</title>
+</head>
+<body>
+
+<h2>Restaurant Menu</h2>
+<form method="post" action="">
+    <label for="dish">Select a Dish:</label>
+    <select name="dish" required>
+        <option value="soup">Tomato Soup</option>
+        <option value="pizza">Margherita Pizza</option>
+        <option value="icecream">Vanilla Ice Cream</option>
+    </select>
+    <input type="submit" value="Show Category">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $dish = $_POST['dish'];
+
+    switch ($dish) {
+        case "soup":
+            echo "Category: Starter<br>";
+            echo "Dish: Tomato Soup";
+            break;
+        case "pizza":
+            echo "Category: Main Course<br>";
+            echo "Dish: Margherita Pizza";
+            break;
+        case "icecream":
+            echo "Category: Dessert<br>";
+            echo "Dish: Vanilla Ice Cream";
+            break;
+        default:
+            echo "Invalid selection.";
+    }
+}
+?>
+
+</body>
+</html>
+
+
+9.2). Ternary Operator Example:Write a script using the ternary operator to display a
+ message if the age is greater than18.?
+=>
+
+<?php
+$age = 20; // Change the value to test
+
+// Ternary operator: condition ? value_if_true : value_if_false
+$message = ($age > 18) ? "You are eligible." : "You are not eligible.";
+
+echo "Age: $age<br>";
+echo $message;
+?>
+
+
+9.3). Color Selector:Write a program to display the name of a color based on user input
+ (red,green,blue).?
+=>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Selector</title>
+</head>
+<body>
+
+<h2>Select a Color</h2>
+<form method="post" action="">
+    <label for="color">Enter a color (red, green, blue):</label>
+    <input type="text" name="color" required>
+    <input type="submit" value="Show Color">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $color = strtolower(trim($_POST['color'])); // Convert to lowercase & remove spaces
+
+    if ($color == "red") {
+        echo "You selected: Red";
+    } elseif ($color == "green") {
+        echo "You selected: Green";
+    } elseif ($color == "blue") {
+        echo "You selected: Blue";
+    } else {
+        echo "Invalid color. Please choose red, green, or blue.";
+    }
+}
+?>
+
+</body>
+</html>
+
+
+ 10.Loops:Do-While,ForEach,ForLoop
+10.1) 1. ForLoop:Writea script that displays numbers from 1 to10 on a single line.?
+=>
+<?php
+// Using for loop to display numbers 1 to 10
+for ($i = 1; $i <= 10; $i++) {
+    echo $i . " ";
+}
+?>
+
+10.2). ForLoop(Addition):Add all integers from 0 to30 and display the total.
+=>
+
+<?php
+$total = 0;
+
+// Loop from 0 to 30
+for ($i = 0; $i <= 30; $i++) {
+    $total += $i; // Add each number to total
+}
+
+echo "The sum of numbers from 0 to 30 is: " . $total;
+?>
+
+10.3)  ChessboardPattern:Use a nested loop to create a chess board pattern(8x8grid).?
+=>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chessboard Pattern</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+        }
+        .black {
+            background-color: black;
+        }
+        .white {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>8x8 Chessboard Pattern</h2>
+
+<table border="1">
+<?php
+for ($row = 1; $row <= 8; $row++) {
+    echo "<tr>";
+    for ($col = 1; $col <= 8; $col++) {
+        // Alternate colors
+        if (($row + $col) % 2 == 0) {
+            echo "<td class='white'></td>";
+        } else {
+            echo "<td class='black'></td>";
+        }
+    }
+    echo "</tr>";
+}
+?>
+</table>
+
+</body>
+</html>
+
+10.4)  VariousPatterns:Generate different pattern s using loops.?
+=>
+1)pattern
+
+<?php
+for ($i = 1; $i <= 5; $i++) {
+    for ($j = 1; $j <= $i; $j++) {
+        echo "* ";
+    }
+    echo "<br>";
+}
+?>
+
+output:
+* 
+* * 
+* * * 
+* * * * 
+* * * * * 
+
+2)pattern-2
+<?php
+for ($i = 5; $i >= 1; $i--) {
+    for ($j = 1; $j <= $i; $j++) {
+        echo "* ";
+    }
+    echo "<br>";
+}
+?>
+
+output:
+* * * * * 
+* * * * 
+* * * 
+* * 
+* 
+
+
+3)pattern-3
+<?php
+for ($i = 1; $i <= 5; $i++) {
+    for ($j = 1; $j <= $i; $j++) {
+        echo $j . " ";
+    }
+    echo "<br>";
+}
+?>
+
+
+output:
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+
+
+
+12.Date And Time Funcation
+12.1)  Write a script to display the current date and time in different formats.
+=>different formet
+
+<?php
+// Set default timezone (you can change it as needed)
+date_default_timezone_set("Asia/Kolkata");
+
+// Display current date and time in different formats
+echo "<h2>Current Date and Time in Different Formats</h2>";
+
+// Format 1: Day-Month-Year Hour:Minute:Second
+echo "Format 1: " . date("d-m-Y H:i:s") . "<br>";
+
+// Format 2: Year/Month/Day
+echo "Format 2: " . date("Y/m/d") . "<br>";
+
+// Format 3: Full day, date and month
+echo "Format 3: " . date("l, d F Y") . "<br>";
+
+// Format 4: 12-hour format with AM/PM
+echo "Format 4: " . date("h:i:s A") . "<br>";
+
+// Format 5: ISO 8601 format
+echo "Format 5: " . date("c") . "<br>";
+
+// Format 6: RFC 2822 format
+echo "Format 6: " . date("r") . "<br>";
+?>
+
+14.include and required Function
+14.1)Use include and require to insert common header and footer files into multiple PHP
+ pages.
+=> Create a header.php
+<!-- header.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My PHP Website</title>
+</head>
+<body>
+    <header style="background: #333; color: white; padding: 10px;">
+        <h2>My Website Header</h2>
+        <nav>
+            <a href="index.php" style="color:white; margin-right:10px;">Home</a>
+            <a href="about.php" style="color:white; margin-right:10px;">About</a>
+            <a href="contact.php" style="color:white;">Contact</a>
+        </nav>
+    </header>
+    <hr>
+
+Step 2: Create footer.php
+=>
+<!-- footer.php -->
+<hr>
+<footer style="background: #333; color: white; padding: 10px; text-align: center;">
+    <p>&copy; <?php echo date("Y"); ?> My Website. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
+
+Step 3: Create index.php (Home Page)
+=>
+<?php include("header.php"); ?>
+
+<h3>Welcome to the Home Page!</h3>
+<p>This is the content of the home page.</p>
+
+<?php include("footer.php"); ?>
+
+
+Step 4: Create about.php
+=><?php require("header.php"); ?>
+
+<h3>About Us</h3>
+<p>This is the about page content.</p>
+
+<?php require("footer.php"); ?>
+
+
+ 16.PHP Expressions ,Operations,and StringFunctions
+16.1)Write a script to perform various string operations like concatenation,substring
+ extraction,andstring length determination ?
+=>
+
+<?php
+// Original strings
+$str1 = "Hello";
+$str2 = "World";
+
+// 1. Concatenation
+$concat = $str1 . " " . $str2;
+echo "<h3>1. String Concatenation</h3>";
+echo "Concatenated String: " . $concat . "<br><br>";
+
+// 2. Substring Extraction
+// substr(string, start, length)
+$substring = substr($concat, 0, 5); // Extract "Hello"
+echo "<h3>2. Substring Extraction</h3>";
+echo "Substring (first 5 chars): " . $substring . "<br>";
+$substring2 = substr($concat, 6); // Extract "World"
+echo "Substring (from 6th char): " . $substring2 . "<br><br>";
+
+// 3. String Length
+$length = strlen($concat);
+echo "<h3>3. String Length</h3>";
+echo "Length of '" . $concat . "' is: " . $length . "<br><br>";
+
+// 4. Additional Examples (Optional)
+echo "<h3>4. Other Useful String Operations</h3>";
+echo "Uppercase: " . strtoupper($concat) . "<br>";
+echo "Lowercase: " . strtolower($concat) . "<br>";
+echo "Reversed: " . strrev($concat) . "<br>";
+?>
+
+->output
+1. String Concatenation
+Concatenated String: Hello World
+
+2. Substring Extraction
+Substring (first 5 chars): Hello
+Substring (from 6th char): World
+
+3. String Length
+Length of 'Hello World' is: 11
+
+4. Other Useful String Operations
+Uppercase: HELLO WORLD
+Lowercase: hello world
+Reversed: dlroW olleH
+
+
+EXTRA LAB FOR CORE PHP
+
+1.php  syntax
+1.1)Write a PHP script that demonstrates the use of single-line(//),
+ multi-line(/* */),andinline(#)comments.
+=>
+<?php
+// This is a single-line comment using double slashes
+echo "Hello, this line comes after a single-line comment.<br>";
+
+# This is another single-line comment using hash symbol
+echo "This line comes after a hash (#) comment.<br>";
+
+/*
+ This is a multi-line comment.
+ You can write multiple lines here without affecting the code.
+ It is very useful for explaining complex logic or disabling blocks of code.
+*/
+echo "This line comes after a multi-line comment.<br>";
+?>
+
+
+1.2) Embedding HTML and PHP:Create a webpage that uses PHP tody namically
+ generate HTML content(e.g.,a table with user information using PHP).
+=>
+
+<?php
+// index.php
+
+// ---- Sample data (this could come from a database) ----
+$users = [
+    ["id" => 1, "name" => "Aisha Patel",   "email" => "aisha@example.com", "role" => "Admin",    "joined_at" => "2024-05-14", "active" => true],
+    ["id" => 2, "name" => "Ravi Kumar",    "email" => "ravi@example.com",  "role" => "Seller",   "joined_at" => "2024-10-02", "active" => true],
+    ["id" => 3, "name" => "Neha Shah",     "email" => "neha@example.com",  "role" => "Buyer",    "joined_at" => "2025-02-20", "active" => false],
+    ["id" => 4, "name" => "Imran Ali",     "email" => "imran@example.com", "role" => "Buyer",    "joined_at" => "2025-04-03", "active" => true],
+    ["id" => 5, "name" => "Sana Iqbal",    "email" => "sana@example.com",  "role" => "Seller",   "joined_at" => "2025-06-11", "active" => false],
+];
+
+// ---- Helpers ----
+function e($str) { return htmlspecialchars($str, ENT_QUOTES, 'UTF-8'); }
+
+// Optional: simple filtering by role via query string (?role=Buyer/Seller/Admin)
+$filterRole = isset($_GET['role']) ? trim($_GET['role']) : '';
+if ($filterRole !== '') {
+    $users = array_values(array_filter($users, fn($u) => strcasecmp($u['role'], $filterRole) === 0));
+}
+
+// Optional: sort by name (?sort=name) or date joined (?sort=joined)
+$sort = $_GET['sort'] ?? '';
+if ($sort === 'name') {
+    usort($users, fn($a,$b) => strcasecmp($a['name'], $b['name']));
+} elseif ($sort === 'joined') {
+    usort($users, fn($a,$b) => strcmp($a['joined_at'], $b['joined_at']));
+}
+
+// Basic stats
+$total = count($users);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Users | Dynamic PHP + HTML Table</title>
+<style>
+    :root {
+        --bg: #0f172a;        /* slate-900 */
+        --panel: #111827;     /* gray-900 */
+        --text: #e5e7eb;      /* gray-200 */
+        --muted: #9ca3af;     /* gray-400 */
+        --accent: #3b82f6;    /* blue-500 */
+        --good: #10b981;      /* emerald-500 */
+        --bad: #ef4444;       /* red-500 */
+        --border: #1f2937;    /* gray-800 */
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+        background: linear-gradient(180deg, #0b1220, #0f172a 30%, #0b1220);
+        color: var(--text);
+        padding: 24px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .card {
+        background: rgba(17,24,39,0.8);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        overflow: hidden;
+    }
+    .header {
+        padding: 20px 24px;
+        display: flex; gap: 16px; align-items: center; justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        background: radial-gradient(1200px 200px at 10% -10%, rgba(59,130,246,0.15), transparent 60%),
+                    radial-gradient(1200px 200px at 90% -10%, rgba(16,185,129,0.15), transparent 60%);
+    }
+    .title { font-size: 20px; font-weight: 700; letter-spacing: .3px; }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    select, a.button {
+        background: #0b1220; color: var(--text); border: 1px solid var(--border);
+        padding: 8px 10px; border-radius: 10px; text-decoration: none; font-size: 14px;
+    }
+    a.button:hover, select:hover { border-color: #334155; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { font-size: 12px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+    tr:hover td { background: rgba(59,130,246,0.05); }
+    .badge {
+        display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    }
+    .ok { background: rgba(16,185,129,.15); color: #d1fae5; border: 1px solid rgba(16,185,129,.35); }
+    .no { background: rgba(239,68,68,.15); color: #fee2e2; border: 1px solid rgba(239,68,68,.35); }
+    .muted { color: var(--muted); }
+    .footer {
+        display: flex; justify-content: space-between; gap: 12px; align-items: center;
+        padding: 16px 24px; color: var(--muted);
+    }
+    .pill { border:1px solid var(--border); padding:6px 10px; border-radius:999px; font-size:12px; }
+    .link { color: var(--accent); text-decoration: none; }
+    .link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <div class="title">User Directory</div>
+            <div class="controls">
+                <!-- Filter by role (reloads the same page with query string) -->
+                <form method="get">
+                    <select name="role" onchange="this.form.submit()">
+                        <option value="">All Roles</option>
+                        <?php
+                        foreach (["Admin","Seller","Buyer"] as $r) {
+                            $sel = ($filterRole && strcasecmp($filterRole,$r)===0) ? 'selected' : '';
+                            echo "<option value='".e($r)."' $sel>".e($r)."</option>";
+                        }
+                        ?>
+                    </select>
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Sort: Default</option>
+                        <option value="name"   <?php echo $sort==='name'?'selected':''; ?>>Sort by Name</option>
+                        <option value="joined" <?php echo $sort==='joined'?'selected':''; ?>>Sort by Joined Date</option>
+                    </select>
+                    <?php if ($filterRole || $sort): ?>
+                        <a class="button" href="<?php echo strtok($_SERVER['REQUEST_URI'],'?'); ?>">Clear</a>
+                    <?php endif; ?>
+                </form>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>Name & Email</th>
+                    <th>Role</th>
+                    <th>Joined</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if ($total === 0): ?>
+                <tr>
+                    <td colspan="5" class="muted">No users found for the selected filters.</td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($users as $u): ?>
+                    <tr>
+                        <td><?php echo (int)$u['id']; ?></td>
+                        <td>
+                            <div style="font-weight:600;"><?php echo e($u['name']); ?></div>
+                            <div class="muted"><?php echo e($u['email']); ?></div>
+                        </td>
+                        <td><?php echo e($u['role']); ?></td>
+                        <td>
+                            <?php
+                                $ts = strtotime($u['joined_at']);
+                                echo date("d M Y", $ts);
+                            ?>
+                        </td>
+                        <td>
+                            <?php if ($u['active']): ?>
+                                <span class="badge ok">Active</span>
+                            <?php else: ?>
+                                <span class="badge no">Inactive</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <div><span class="pill">Total Shown: <?php echo $total; ?></span></div>
+            <div>Rendered with PHP: dynamically generated rows, formatted dates, filtering & sorting.</div>
+        </div>
+    </div>
+    <p class="muted" style="margin-top:10px;">
+        Tip: Change the role filter or sort options to see dynamic updates (no page redesign needed).
+    </p>
+</div>
+</body>
+</html>
+
+ 
+1.3):Experiment with echo,print,and var_dump.Write a script that
+ outputs dif ferent types of data using these functions.
+=>
+<?php
+// 1. Using echo (can output multiple values, faster, no return value)
+echo "<h2>1. Using echo</h2>";
+echo "Hello World!<br>";
+echo "Number: ", 100, "<br>";
+echo "Boolean (true): ", true, "<br>";
+echo "Boolean (false shows empty): ", false, "<br><br>";
+
+// 2. Using print (outputs only one argument, returns 1)
+echo "<h2>2. Using print</h2>";
+print "Hello from print!<br>";
+print "Number: " . 200 . "<br>";
+print "Expression result (5+5): " . (5+5) . "<br><br>";
+
+// 3. Using var_dump (debugging function - shows type & value)
+echo "<h2>3. Using var_dump</h2>";
+$intVar = 42;
+$stringVar = "PHP Script";
+$boolVar = true;
+$arrayVar = array("Red", "Green", "Blue");
+
+echo "Integer: ";
+var_dump($intVar);
+echo "<br>";
+
+echo "String: ";
+var_dump($stringVar);
+echo "<br>";
+
+echo "Boolean: ";
+var_dump($boolVar);
+echo "<br>";
+
+echo "Array: ";
+var_dump($arrayVar);
+echo "<br>";
+?>
+
+ 2.PHP Variables
+2.1)Write a script that declares variables of different types and converts
+ the min toothertypes(e.g.,integer to float,string to integer).Display the type and
+ value before and after the conversion.
+=>
+<?php
+echo "<h2>Type Conversion in PHP</h2>";
+
+// Integer to Float
+$intVar = 42;
+echo "<b>Original:</b> ";
+var_dump($intVar);
+echo "<br>";
+
+$floatVar = (float)$intVar; // or (double)
+echo "<b>After converting to float:</b> ";
+var_dump($floatVar);
+echo "<hr>";
+
+// String to Integer
+$strVar = "123";
+echo "<b>Original:</b> ";
+var_dump($strVar);
+echo "<br>";
+
+$intFromStr = (int)$strVar;
+echo "<b>After converting string to integer:</b> ";
+var_dump($intFromStr);
+echo "<hr>";
+
+// Float to Integer
+$floatNum = 45.89;
+echo "<b>Original:</b> ";
+var_dump($floatNum);
+echo "<br>";
+
+$intFromFloat = (int)$floatNum; // decimal part removed
+echo "<b>After converting float to integer:</b> ";
+var_dump($intFromFloat);
+echo "<hr>";
+
+// Boolean to String
+$boolVar = true;
+echo "<b>Original:</b> ";
+var_dump($boolVar);
+echo "<br>";
+
+$strFromBool = (string)$boolVar;
+echo "<b>After converting boolean to string:</b> ";
+var_dump($strFromBool);
+echo "<hr>";
+
+// Array to Object
+$arrayVar = ["name" => "Aisha", "age" => 22];
+echo "<b>Original:</b> ";
+var_dump($arrayVar);
+echo "<br>";
+
+$objVar = (object)$arrayVar;
+echo "<b>After converting array to object:</b> ";
+var_dump($objVar);
+echo "<hr>";
+?>
+
+
+->output
+
+Original: int(42)
+After converting to float: float(42)
+
+Original: string(3) "123"
+After converting string to integer: int(123)
+
+Original: float(45.89)
+After converting float to integer: int(45)
+
+Original: bool(true)
+After converting boolean to string: string(1) "1"
+
+Original: array(2) { ["name"]=> string(5) "Aisha" ["age"]=> int(22) }
+After converting array to object: object(stdClass)#1 (2) { ["name"]=> string(5) "Aisha" ["age"]=> int(22) }
+
+2.2)Demonstrate the use of variable variables in PHP.Writea script
+ where a variable name is stored in another variable,and then use it to print the value ?
+=>
+<?php
+echo "<h2>Variable Variables in PHP</h2>";
+
+// Step 1: Normal variable
+$fruit = "apple";
+
+// Step 2: Create variable variable
+// The value of $fruit ("apple") becomes the new variable name
+$$fruit = "Red and Sweet";
+
+// Step 3: Display results
+echo "Value of \$fruit: " . $fruit . "<br>";   // outputs: apple
+echo "Value of \$\$fruit (i.e., \$apple): " . $apple . "<br><br>";
+
+// Another example
+$animal = "dog";
+$$animal = "German Shepherd";
+
+echo "Value of \$animal: " . $animal . "<br>";   // outputs: dog
+echo "Value of \$\$animal (i.e., \$dog): " . $dog . "<br>";
+?>
+
+2.3)Writea script that show show global and local variables
+ work.Use the global keyword inside a function to access aglobal variable.
+=>
+<?php
+echo "<h2>Global and Local Variables in PHP</h2>";
+
+// Global variable
+$siteName = "My PHP Website";
+
+function showVariables() {
+    // Local variable
+    $localVar = "I am Local!";
+
+    echo "Inside function:<br>";
+    echo "Local Variable: " . $localVar . "<br>";
+
+    // Trying to access global variable directly will NOT work
+    // echo $siteName;  //  Undefined variable
+
+    // Use global keyword to access $siteName
+    global $siteName;
+    echo "Global Variable (using global keyword): " . $siteName . "<br><br>";
+}
+
+showVariables();
+
+echo "Outside function:<br>";
+echo "Global Variable: " . $siteName . "<br>";
+// echo $localVar; //  Undefined, because $localVar only exists inside function
+?>
+
+
+13Include and Require
+13.1)Write a PHP script that includes header,navigation,andfooter
+ files in multiple web pages to create a basic template system.
+=>header.php
+<!-- header.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My PHP Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #333; color: white; padding: 15px; text-align: center; }
+        nav { background: #555; padding: 10px; }
+        nav a { color: white; margin: 0 10px; text-decoration: none; }
+        nav a:hover { text-decoration: underline; }
+        footer { background: #333; color: white; text-align: center; padding: 10px; margin-top: 20px; }
+        main { padding: 20px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to My PHP Website</h1>
+</header>
+<?php include "nav.php"; ?>
+<main>
+
+=>2. nav.php
+<!-- nav.php -->
+<nav>
+    <a href="index.php">Home</a>
+    <a href="about.php">About</a>
+    <a href="contact.php">Contact</a>
+</nav>
+
+=>3. footer.php
+<!-- footer.php -->
+</main>
+<footer>
+    <p>&copy; <?php echo date("Y"); ?> My PHP Website. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
+
+=>index.php
+<?php include "header.php"; ?>
+<h2>Home Page</h2>
+<p>This is the home page content.</p>
+<?php include "footer.php"; ?>
+
+=>about.php
+<?php include "header.php"; ?>
+<h2>About Us</h2>
+<p>This is the about page content.</p>
+<?php include "footer.php"; ?>
+
+=>contact.php
+<?php include "header.php"; ?>
+<h2>Contact Us</h2>
+<p>You can reach us at contact@example.com.</p>
+<?php include "footer.php"; ?>
+
+
+
+13.3)Use  require to include a critical file.If the file doesn't
+ exist,display a customer error message instead of the default PHP error ?
+=>
+require "config.php";
+
+<?php
+echo "<h2>Require Critical File with Custom Error Handling</h2>";
+
+$criticalFile = "config.php";  // example critical file
+
+// Check before requiring
+if (file_exists($criticalFile)) {
+    require $criticalFile;
+    echo " Critical file '$criticalFile' included successfully.<br>";
+} else {
+    // Custom error message instead of PHP fatal error
+    echo "<span style='color:red; font-weight:bold;'>
+             Error: Required file '$criticalFile' is missing!
+          </span><br>";
+    // Stop execution safely
+    exit("Application cannot continue without '$criticalFile'.");
+}
+?>
