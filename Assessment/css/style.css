@@ -1,0 +1,40 @@
+body{
+    padding: 0%;
+    margin: 0;
+   overflow-x: hidden; 
+   background-color:grey;
+
+}
+.container{
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin-left: 500px;
+
+}
+input select option{
+    padding: 2px;
+    margin: 4px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    
+    
+}
+.table-container{
+    width: 50%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+}
+table,th,td{
+    border:1px solid darkgoldenrod;
+    text-align: center;
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color: white;
+}
