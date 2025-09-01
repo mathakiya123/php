@@ -1,6 +1,4 @@
-<?php
-
-
+<?php required_require_once('config.php');?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +43,7 @@
     </div>
 </body>
 </html>
+
 
 
 
