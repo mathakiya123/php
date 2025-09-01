@@ -1,46 +1,5 @@
 <?php
-require_once('config.php');
 
-
-if(isset($_POST['submit'])){
-
-    $name=mysqli_real_escape_string($con,$_POST['name']);
-    $phone=mysqli_real_escape_string($con,$_POST['phone']);
-    $emai=mysqli_real_escape_string($con,$_POST['email']);
-    $department=mysqli_real_escape_string($con,$_POST['deprtment']);
-    $date=$_POST['date'];
-    $time=$_POST['time'];
-
-    $check="SELECT * FROM  tbl_ap  WHERE date='$date' AND time='$time'";
-        $res=mysqli_query($con,$check);
-
-        if(mysqli_num_rows($res)>0){
-            echo "<script>
-            alert('appointment slot is already book. please choise other slot');
-            window.location='index.php';
-            </script>";
-        }
-        else{
-            $sql="INSERT INTO tbl_ap(name,phone,email,department,date,time)VALUES('$name','$phone','$emai','$department','$date','$time')";
-
-            if(mysqli_query($con,$sql)){
-                echo "<script>
-                alert('appointmet book sussesfuly');
-                window.location='appointments.php';
-                </script>";
-            }
-            else{
-                echo "Error".mysqli_error($con);
-            }
-        }
-    }
-        else
-        {
-                header("location: index.php");
-        }
-
-
-?>
 
 
 <!DOCTYPE html>
@@ -58,7 +17,7 @@ if(isset($_POST['submit'])){
 <body>
     <div class="container  mt-5 p-3 ">
        <h3>Appointment form  </h3>
-        <form action="" method="post" >
+        <form action="save_appointment.php" method="post" >
             <label for="name">name</label>
             <input type="text" name="name" placeholder="Enter your name" required><br><br>
              <label for="phone">phone</label>
@@ -86,6 +45,7 @@ if(isset($_POST['submit'])){
     </div>
 </body>
 </html>
+
 
 
 
