@@ -1,0 +1,41 @@
+body{
+    background-color: #00a65a;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#header{
+    background-color: #00a65a ;
+    width: 100%;
+    height: auto;
+}
+
+#admin_dashboard{
+
+    background-color: white;
+    width: 100%;
+    height: auto;
+}
+
+.sidebar-links li{
+
+    text-decoration: none;
+    list-style-type: none;
+    padding:  10px 3px;
+    font-size: 17px;
+
+}
+
+.sidebar-links li a{
+
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.icon{
+    font-size: 50px;
+}
+
